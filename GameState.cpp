@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-void GameState::capture(const Paletka& paddle, const Pilka& ball, const std::vector<Stone>& stones)
+void GameState::capture(Game& game,const Paletka& paddle, const Pilka& ball, const std::vector<Stone>& stones)
 {
     paddlePosition = sf::Vector2f(paddle.getX(), paddle.getY());
     ballPosition = sf::Vector2f(ball.getX(), ball.getY());
@@ -15,6 +15,7 @@ void GameState::capture(const Paletka& paddle, const Pilka& ball, const std::vec
         BlockData b{ s.getX(), s.getY(), s.getHP() };
         blocks.push_back(b);
     }
+    score = game.getScore();
 }
 
 bool GameState::saveToFile(const std::string& filename)
@@ -27,6 +28,7 @@ bool GameState::saveToFile(const std::string& filename)
     file << "BLOCKS_COUNT " << blocks.size() << "\n";
     for (const auto& b : blocks)
         file << b.x << " " << b.y << " " << b.hp << "\n";
+    file << "SCORE " << score << "\n";
     file.close();
     return true;
 }
@@ -50,6 +52,9 @@ bool GameState::loadFromFile(const std::string& filename)
         blocks.push_back(bd);
     }
     blocks.reserve(blockCount);
+
+    file >> label >> score;
+
     file.close();
     return true;
 }
@@ -69,4 +74,5 @@ void GameState::apply(Game& g, Paletka& p, Pilka& b, std::vector<Stone>& stones)
         stones.emplace_back(bd.x, bd.y, BLOCK_W, BLOCK_H, bd.hp);
     }
     g.resetGameOver();
+    g.setScore(score);
 }
