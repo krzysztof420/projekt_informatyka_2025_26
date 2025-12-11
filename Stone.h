@@ -1,51 +1,50 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef STONE_H
+#define STONE_H
 
 #include <SFML/Graphics.hpp>
-#include <vector>
-#include "Paletka.h"
-#include "Pilka.h"
-#include "Stone.h"
 
-class Game {
+class Stone {
 private:
-    Paletka m_paletka;
-    Pilka m_pilka;
-    std::vector<Stone> m_bloki;
-    const float m_width = 800.f;
-    const float m_height = 600.f;
-    bool m_gameOver = false;
-    int m_score;
-    sf::Font m_font;
-    bool m_fontLoaded = false;
-    int m_level = 1;
+    int hitpoints;
+    sf::RectangleShape shape;
+
+    sf::Color getColorForHP(int hp) {
+        switch (hp) {
+        case 5: return sf::Color(127, 0, 0);
+        case 4: return sf::Color(159, 0, 0);
+        case 3: return sf::Color(191, 0, 0);
+        case 2: return sf::Color(223, 0, 0);
+        case 1: return sf::Color(255, 0, 0);
+        default: return sf::Color::White;
+        }
+    };
 
 public:
-    Game();
+    Stone(float cx, float cy, float w, float h, int hp)
+        : hitpoints(hp)
+    {
+        shape.setSize({ w, h });
+        shape.setOrigin(w / 2.f, h / 2.f);
+        shape.setPosition(cx, cy);
+        shape.setFillColor(getColorForHP(hp));
+    }
 
-    void update(sf::Time dt);
-    void render(sf::RenderTarget& target);
+    void damage(int d = 1)
+    {
+        if (hitpoints > 0)
+        {
+            hitpoints--;
+            shape.setFillColor(getColorForHP(hitpoints));
+        }
+    }
+    bool destroyed() const { return hitpoints <= 0; }
+    int getHP() const { return hitpoints; }
 
-    const Paletka& getPaddle() const { return m_paletka; }
-    const Pilka& getBall() const { return m_pilka; }
-    const std::vector<Stone>& getBlocks() const { return m_bloki; }
+    void draw(sf::RenderTarget& target) { target.draw(shape); }
+    sf::FloatRect getBounds() const { return shape.getGlobalBounds(); }
 
-    Paletka& getPaddleRef() { return m_paletka; }
-    Pilka& getBallRef() { return m_pilka; }
-    std::vector<Stone>& getBlocksRef() { return m_bloki; }
-
-    void generateDefaultBlocks();
-
-    bool isGameOver() const { return m_gameOver; }
-    void reset();
-    void resetGameOver() { m_gameOver = false; }
-
-    int getScore() const { return m_score; }
-    void setScore(int s) { m_score = s; }
-    void resetScore() { m_score = 0; }
-
-    void setLevel(int level) { m_level = level; }
-    int getLevel() const { return m_level; }
+    float getX() const { return shape.getPosition().x; }
+    float getY() const { return shape.getPosition().y; }
 };
 
 #endif
