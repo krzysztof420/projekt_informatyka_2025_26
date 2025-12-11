@@ -16,6 +16,7 @@ public:
     sf::Vector2f ballPosition;
     sf::Vector2f ballVelocity;
     std::vector<BlockData> blocks;
+    int score = 0;
 
     void capture(const Paletka& paddle, const Pilka& ball, const std::vector<Stone>& stones);
     bool saveToFile(const std::string& filename);
@@ -24,3 +25,4 @@ public:
 };
 
 #endif
+
