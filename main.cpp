@@ -37,6 +37,7 @@ int main()
                         int sel = menu.getSelectedItem();
                         if (sel == 0) 
                         {
+                            game.resetScore();
                             game.reset();
                             game.generateDefaultBlocks();
                             currentState = AppState::Playing;
@@ -63,9 +64,9 @@ int main()
                 if (event.key.code == sf::Keyboard::F5) {
                     if (currentState == AppState::Playing) {
                         GameState gs;
-                        gs.capture(game.getPaddle(), game.getBall(), game.getBlocks());
+                        gs.capture(game, game.getPaddle(), game.getBall(), game.getBlocks());
                         if (gs.saveToFile("zapis.txt")) std::cout << "Gra zapisana!\n";
-                        else std::cout << "B³¹d zapisu!\n";
+                        else std::cout << "BÅ‚Ä…d zapisu!\n";
                     }
                 }
             }
