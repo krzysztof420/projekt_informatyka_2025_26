@@ -15,9 +15,10 @@ private:
     const float m_width = 800.f;
     const float m_height = 600.f;
     bool m_gameOver = false;
-    int m_score = 0;
+    int m_score;
     sf::Font m_font;
     bool m_fontLoaded = false;
+    int m_level = 1;
 
 public:
     Game();
@@ -36,10 +37,15 @@ public:
     void generateDefaultBlocks();
 
     bool isGameOver() const { return m_gameOver; }
-    int getScore() const { return m_score; }
     void reset();
     void resetGameOver() { m_gameOver = false; }
+
+    int getScore() const { return m_score; }
+    void setScore(int s) { m_score = s; }
     void resetScore() { m_score = 0; }
+
+    void setLevel(int level) { m_level = level; }
+    int getLevel() const { return m_level; }
 };
 
 #endif
