@@ -15,7 +15,7 @@ void Game::generateDefaultBlocks()
 {
     m_bloki.clear();
     const int cols = 10;
-    const int rows = 5;
+    int rows = std::min(m_level, 5);
     const float spacing = 4.f;
     const float margin = 20.f;
     float usable = m_width - 2.f * margin;
@@ -70,6 +70,12 @@ void Game::update(sf::Time /*dt*/)
         [](const Stone& s) { return s.destroyed(); }),
         m_bloki.end());
 
+    if (m_bloki.empty())
+    {
+        m_level++;
+        reset();
+    }
+
     if (m_pilka.getY() - m_pilka.getRadius() > m_height) {
         m_gameOver = true;
         return;
@@ -114,11 +120,18 @@ void Game::render(sf::RenderTarget& target)
 
 void Game::reset()
 {
+    float baseSpeedX = 4.f;
+    float baseSpeedY = 3.f;
+
+    float speedIncrease = m_level;
+    baseSpeedX += speedIncrease;
+    baseSpeedY += speedIncrease; 
+    
     m_paletka.setPosition(sf::Vector2f(m_width / 2.f, 540.f));
-    m_pilka.reset(sf::Vector2f(m_width / 2.f + 8.f, 300.f), sf::Vector2f(4.f, 3.f));
+    m_pilka.reset(sf::Vector2f(m_width / 2.f + 8.f, 300.f), sf::Vector2f(baseSpeedX, baseSpeedY));
+
 
     generateDefaultBlocks();
 
     m_gameOver = false;
-    m_score = 0;
 }
