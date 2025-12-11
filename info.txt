@@ -1,0 +1,24 @@
+Projekt przedstawia grę typu Arkanoid.
+
+Celem gry jest zniszczenie wszystkich bloków na ekranie poprzez kierowanie w ich stronę piłki.
+
+W celu odbicia piłki w górę należy przemieścić paletkę pod piłkę.
+
+Bloki maja różną liczbę punktów życia, co odzwierciedlają ich kolory.
+
+Za każdy zniszczony blok do wyniku dodawany jest punkt.
+
+Gra posiada nieskończoną ilość poziomów.
+
+W każdym następnym poziomie zwiększana jest prędkość piłki.
+
+W poziomach 1-5 zwiększana jest też liczba bloków.
+
+Nawigacja w grze:
+↑ ↓ - nawigacja po menu
+← → - ruch paletką
+Enter - zatwierdzenie wyboru w menu
+Esc - wyjście
+F5 - zapis gry
+
+Miłej gry :)
