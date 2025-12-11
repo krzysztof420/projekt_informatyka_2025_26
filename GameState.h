@@ -18,11 +18,10 @@ public:
     std::vector<BlockData> blocks;
     int score = 0;
 
-    void capture(const Paletka& paddle, const Pilka& ball, const std::vector<Stone>& stones);
+    void capture(Game& game,const Paletka& paddle, const Pilka& ball, const std::vector<Stone>& stones);
     bool saveToFile(const std::string& filename);
     bool loadFromFile(const std::string& filename);
     void apply(Game& game, Paletka& paddle, Pilka& ball, std::vector<Stone>& stones);
 };
 
 #endif
-
